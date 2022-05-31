@@ -24,6 +24,10 @@ export class Account {
   }
 
   private constructor(attrs: AccountAttrs) {
-    this.attrs = attrs;
+    this.attrs = {
+      address: attrs.address,
+      balance: attrs.balance,
+      id: attrs.id,
+    };
   }
 }
