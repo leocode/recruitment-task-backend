@@ -4,6 +4,7 @@ import { AccountInMemoryRepository } from './account/repositories/account-inmemo
 import { EventBus } from './event-bus';
 import { TransactionExecutor } from './transaction/transaction-executor';
 import { TransactionManager } from './transaction/transaction-manager';
+import { TransactionFacade } from './transaction/transaction.facade';
 
 export const setup = () => {
   const eventBus = new EventBus();
@@ -12,7 +13,8 @@ export const setup = () => {
   const accountFacade = new AccountFacade(accountRepository, accountLegalityVerifier);
 
   const transactionExecutor = new TransactionExecutor(accountFacade);
-  const transactionFacade = new TransactionManager(accountFacade, transactionExecutor);
+  const transactionManager = new TransactionManager(accountFacade, transactionExecutor);
+  const transactionFacade = new TransactionFacade(transactionManager);
 
   return {
     accountFacade,
