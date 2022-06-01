@@ -10,6 +10,14 @@ export class EventBus {
     this.listeners.push({ eventType, cb });
   }
 
+  public async removeEventListener<T extends Event>(eventType: EventConstructor<T>, cb: EventHandler<T>) {
+    const listenerIndex = this.listeners.findIndex(l => l.cb === cb && l.eventType === eventType);
+
+    if (listenerIndex >= 0) {
+      this.listeners.splice(listenerIndex, 1);
+    }
+  }
+
   public async publish(event: Event) {
     const listeners = this.listeners.filter(l => event.constructor === l.eventType);
 
